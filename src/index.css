@@ -1,0 +1,105 @@
+@import "https://unpkg.com/@blueprintjs/icons@^3.4.0/lib/css/blueprint-icons.css";
+@import "https://unpkg.com/@blueprintjs/core@^3.10.0/lib/css/blueprint.css";
+
+:root {
+  --bunker: rgba(14,19,24,1.0);
+  --havelock-blue: rgba(79,126,215,1.0);
+  --white: rgba(255,255,255,1.0);
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.bp3-dark #root {
+  background-color: #30404d;
+}
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+.navigation{
+  background: rgb(78,128,214);
+  background: linear-gradient(90deg, rgba(78,128,214,1) 0%, rgba(48,253,178,1) 100%);
+}
+
+.app-logo{
+  height: 35px;
+  width: 38px;
+}
+
+.nav-items-list, .nav-item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  list-style: none;
+}
+
+.nav-item{
+  cursor: pointer;
+}
+.nav-item:hover{
+  opacity: 0.7;
+}
+
+.nav-item img{
+  width: 16px;
+  height: 16px;
+}
+
+.nav-item span{
+  margin-left: 4px;
+  margin-right: 20px;
+  letter-spacing: 0.00px;
+  line-height: normal;
+  text-align: center;
+  color: var(--white);
+}
+
+.file-dimensions{
+  color: #00000088;
+  font-size: 0.7rem;
+  font-weight: bolder;
+  margin: 2px 0 10px 10px;
+}
+
+.bp3-portal div:focus {
+  outline: none !important;
+  border: none !important;
+}
+
+.project-title{
+  font-weight: bolder;
+  font-size: 1.1rem;
+}
+
+.project-title, .project-title:focus{
+  outline: none !important;
+  border: none !important;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.resize-option{
+  margin-left: 10px;
+}
+
+.bp3-button.bp3-outlined{
+  margin: 0 10px;
+}
+
+.bp3-navbar.polotno-side-panel > div:nth-child(1){
+  background-color: var(--bunker);
+  color: white;
+}
+
+.bp3-navbar.polotno-side-panel > div:nth-child(2){
+  background-color: rgba(41,47,58,1.0);
+  color: white;
+}
+
+.bp3-tab, .bp3-tab-panel button span{
+  color: white;
+}
