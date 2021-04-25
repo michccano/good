@@ -51,7 +51,7 @@ def get(path):
 
 @app.route('/search_quotes/<kw>')
 def read(kw):
-    myquery = {"$or":[{"the_quote":{"$regex":"^"+kw+"^"}}, {"tag": kw }] }
+    myquery = {"$or":[{"the_quote":{"$regex":".*"+kw+".*"}}, {"tag": kw }] }
 
     mydoc = mycol.find(myquery)
     results = []

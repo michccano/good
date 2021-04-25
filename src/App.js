@@ -126,13 +126,19 @@ const QuotesPanel = observer(({ store }) => {
    
     setquote(event.target.value);
 
-    searchNow();
-  
+  }
+
+  function kup(event){
+    if(event.keyCode==13){
+   
+      searchNow(); 
     
+    }
   }
 
   function go(txt) {
 
+   
       const element = store.activePage.addElement({
         type: 'text',
         width:200,
@@ -140,9 +146,20 @@ const QuotesPanel = observer(({ store }) => {
         x: 50,
         y: 50,
         fill: 'black',
-        text: txt.target.innerHTML,
+        text: quotes[txt.target.getAttribute('id')].quote,
       });
     
+      const element1 = store.activePage.addElement({
+        type: 'text',
+        width:200,
+        height:200,
+        x: 50,
+        y: 80,
+        fill: 'black',
+        text: quotes[txt.target.getAttribute('id')].author,
+      });
+    
+
       }
 
 
@@ -155,7 +172,7 @@ const QuotesPanel = observer(({ store }) => {
 
    
      
-      fetch("http://54.90.31.50:5000/search_quotes/"+quote_search)
+      fetch("http://localhost:5000/search_quotes/"+quote_search)
       .then(res => res.json())
       .then(
         (result) => {
@@ -187,6 +204,7 @@ const QuotesPanel = observer(({ store }) => {
         <InputGroup
         leftIcon="search"
         placeholder="Search..."
+        onKeyUp={kup}
        onChange={handleChange}
         style={{
           marginBottom: "20px"
@@ -202,7 +220,7 @@ const QuotesPanel = observer(({ store }) => {
   background: '#eee',
   padding: '1em',
   'border-radius': '1em'
-      }} class="quote" onClick={go} >
+      }} class="quote" id={index} onClick={go}  >
       <blockquote style={{  margin: '1em'}}>
        <p style={{color: 'black'}}>{person.quote}</p>
       </blockquote>
