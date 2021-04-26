@@ -10,6 +10,7 @@ import { SectionTab } from "polotno/side-panel/tab-button";
 import templates from './assets/templatessvg@2x.svg'
 import styles from './assets/stylessvg@2x.svg'
 import qoutes from './assets/quotessvg@2x.svg'
+import elements from './assets/elementssvg@2x.svg'
 import removeBG from './assets/removebgsvg@2x.svg'
 import folders from './assets/folderssvg@2x.svg'
 
@@ -31,15 +32,25 @@ const [search_bar,setsb] = React.useState("")
 
 function handleChange(event) {
   setsb(event.target.value);
-  loadImages();
+
 }
 
+
+function kup(event){
+  if(event.keyCode==13){
+ 
+    loadImages(); 
+  
+  }
+}
+
+
 async function loadImages() {
-    // here we should implement your own API requests
+
     setImages([]);
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    fetch("https://pixabay.com/api/?key=19999898-164f9544ec15ad00582274e8e&q="+search_bar+"&image_type=illustation,vector")
+    fetch("https://pixabay.com/api/?key=19999898-164f9544ec15ad00582274e8e&q="+search_bar+"&image_type=photo")
     .then(res => res.json())
     .then(
       (result) => {
@@ -86,6 +97,7 @@ async function loadImages() {
         leftIcon="search"
         placeholder="Search..."
         onChange={handleChange}
+        onKeyUp={kup}
         style={{
           marginBottom: "20px"
         }}
@@ -238,6 +250,110 @@ const QuotesPanel = observer(({ store }) => {
 });
 
 
+
+const ElementorPanel = observer(({ store }) => {
+
+  const [images, setImages] = React.useState([]);
+  const [search_bar,setsb] = React.useState("")
+  
+  
+  function handleChange(event) {
+    setsb(event.target.value);
+  
+  }
+
+  
+function kup(event){
+  if(event.keyCode==13){
+ 
+    loadImages(); 
+  
+  }
+}
+  
+  async function loadImages() {
+      // here we should implement your own API requests
+      setImages([]);
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+  
+      fetch("https://pixabay.com/api/?key=19999898-164f9544ec15ad00582274e8e&q="+search_bar+"&image_type=vector")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          console.log(result.hits);
+          var allImages = [];
+  
+          for(var i=0; i<result.hits.length; i++){
+         allImages.push({url:result.hits[i].webformatURL});
+        }
+  
+        setImages(allImages);
+  
+        },
+  
+  
+  
+  
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          
+        }
+      )
+  
+  
+      // for demo images are hard coded
+      // in real app here will be something like JSON structure
+   
+    }
+  
+  
+    React.useEffect(() => {
+      loadImages();
+    }, []);
+  
+  
+
+    return (
+      <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+        <InputGroup
+          leftIcon="search"
+          placeholder="Search..."
+          onKeyUp={kup}
+          onChange={handleChange}
+          style={{
+            marginBottom: "20px"
+          }}
+        />
+  
+        {/* you can create yur own custom component here */}
+        {/* but we will use built-in grid component */}
+        <ImagesGrid
+          images={images}
+          getPreview={(image) => image.url}
+          onSelect={async (image) => {
+            var x = 32; var y= 32;
+            const { width, height } = await getImageSize(image.url);
+            store.activePage.addElement({
+              type: "image",
+              src: image.url,
+              width,
+              height,x,y
+            });
+          }}
+          rowsNumber={2}
+          isLoading={!images.length}
+          loadMore={false}
+        />
+      </div>
+    );
+  });
+  
+
+
+
+
 const App = ({ store }) => {
   const Templates = {
     name: "Templates",
@@ -307,7 +423,16 @@ const App = ({ store }) => {
   };
 
 
-
+  const Elements = {
+    name: "Elements",
+    Tab: (props) => (
+      <SectionTab name="Elements" {...props}>
+         <img src={elements} />
+      </SectionTab>
+    ),
+    Panel: ElementorPanel
+    
+  };
 
 
   const RemoveBG = {
@@ -348,7 +473,7 @@ const App = ({ store }) => {
     })
   };
   //PhotosSection,
-  const sections = [Templates, TextSection,  СustomPhotos,  ElementsSection, BackgroundSection, Styles, Quotes, RemoveBG, UploadSection, Folders];
+  const sections = [Templates, TextSection,  СustomPhotos, Elements,  BackgroundSection, Styles, Quotes, RemoveBG, UploadSection, Folders];
   return (
     <React.Fragment>
       <Topbar store={store} />
