@@ -226,17 +226,17 @@ const QuotesPanel = observer(({ store }) => {
 <div class="container">
     {quotes.map((person, index) => (
    
-<div style={{'margin-top':'35px'}}>
+<div id={index} onClick={go} style={{'margin-top':'35px'}}>
     <figure style={{
         margin: '0',
   background: '#eee',
   padding: '1em',
   'border-radius': '1em'
       }} class="quote" id={index} onClick={go}  >
-      <blockquote style={{  margin: '1em'}}>
+      <blockquote id={index} onClick={go} style={{  margin: '1em'}}>
        <p style={{color: 'black'}}>{person.quote}</p>
       </blockquote>
-      <figcaption style={{color: 'black'}}>
+      <figcaption id={index} onClick={go} style={{color: 'black'}}>
         &mdash; {person.author} <cite></cite>  </figcaption>
     </figure>
     </div>
